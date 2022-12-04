@@ -1,4 +1,3 @@
-import { Component } from "react";
 import styled from 'styled-components';
 
 const ListItem = styled.li`
@@ -14,20 +13,17 @@ const ButtonDelete = styled.button`
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
-export class ContactList extends Component{
-
-    render() {
+export function ContactList({ listData, deleteContact }){
         return (
             <ul>
-                {this.props.listData.map((e,index) => {
+                {listData.map((e,index) => {
                 return (
                     <ListItem key={e.id}>
                         <p>{e.name}: {e.number}</p>
-                        <ButtonDelete type="button" onClick={()=> this.props.deleteContact(index)}>Delete</ButtonDelete>
+                        <ButtonDelete type="button" onClick={()=> deleteContact(index)}>Delete</ButtonDelete>
                     </ListItem>
                 );
                 })}
             </ul>
         );
-    }
 }

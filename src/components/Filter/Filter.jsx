@@ -1,5 +1,5 @@
 import React from "react";
-import { Component } from "react";
+// import { Component } from "react";
 import styled from 'styled-components';
 
 const Label = styled.label`
@@ -7,18 +7,11 @@ const Label = styled.label`
     margin-bottom: 10px;
 `;
 
-export class Filter extends Component{
-    state={
-       value: '',
-    };
-
-    render() {
+export function Filter({ value, onChange }){
         return (
         <>
             <Label htmlFor="filter">Find contacts by name</Label>
-            <input type="text" name="filter" value={this.props.value} onChange={this.props.onChange} />
+            <input type="text" name="filter" value={value} onChange={onChange} />
         </>
         );
-
-    }
 }

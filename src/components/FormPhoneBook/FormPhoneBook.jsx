@@ -1,8 +1,6 @@
-import { Component } from "react";
 import styled from 'styled-components';
 
 import { Formik, Form, Field } from 'formik';
-
 
 const InputFieldLabel = styled.label`
     display: block;
@@ -22,17 +20,15 @@ const InputField = styled(Field)`
 
 `;
 
-export class FormPhoneBook extends Component{
-    initialValues = {
+export function FormPhoneBook({ handleSubmit}){
+    let initialValues = {
      name: '',
      number: ''
     }
-
-    render() {
         return (
-            <Formik initialValues={ this.initialValues} onSubmit={this.props.handleSubmit}>
+            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
             <Form autoComplete="off">
-                <InputFieldLabel htmlFor="name"> Name </InputFieldLabel>
+                <InputFieldLabel htmlFor="name">Name</InputFieldLabel>
                 <InputField
                     type="text"
                     name="name"
@@ -52,5 +48,4 @@ export class FormPhoneBook extends Component{
             </Form>    
             </Formik>
         );
-    }
 }

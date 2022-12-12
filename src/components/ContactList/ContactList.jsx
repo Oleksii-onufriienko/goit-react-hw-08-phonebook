@@ -13,14 +13,14 @@ const ButtonDelete = styled.button`
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
-export function ContactList({ listData, deleteContact }){
+export function ContactList({ listData, delContact }){
         return (
             <ul>
-                {listData.map((e,index) => {
+                {listData.map(e => {
                 return (
                     <ListItem key={e.id}>
                         <p>{e.name}: {e.number}</p>
-                        <ButtonDelete type="button" onClick={()=> deleteContact(index)}>Delete</ButtonDelete>
+                        <ButtonDelete type="button" onClick={()=> delContact(e.id)}>Delete</ButtonDelete>
                     </ListItem>
                 );
                 })}

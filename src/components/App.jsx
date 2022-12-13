@@ -1,14 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from 'nanoid'
 import styled from 'styled-components';
 
 import { FormPhoneBook } from "./FormPhoneBook/FormPhoneBook";
 import { ContactList } from "./ContactList/ContactList";
 import { Filter } from "./Filter/Filter";
-import { addContact, deleteContact } from "redux/dataSlice";
 import { setFilter } from "redux/filterSlice";
-
+import { fetchContacts,  addContact, deleteContact} from "services/api";
+import { useEffect } from "react";
 
 const BoxApp = styled.div`
   padding: 20px;
@@ -16,15 +15,19 @@ const BoxApp = styled.div`
 
 export function App() {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contactsData.contacts);
+  const contacts = useSelector(state => state.contactsData.contacts.items);
   const filter = useSelector(state => state.filter.filter);
+  const isLoading = useSelector(state => state.contactsData.contacts.isLoading);
   
+  useEffect(() => {
+    dispatch(fetchContacts());
+  },[dispatch]);
+
   const handleSubmit = (value, {resetForm}) => {
-    const { name, number } = value;
+    const { name, phone } = value;
     const contact = {
-        id: nanoid(),
         name,
-        number,
+        phone,
     };
 
     if (isContact(name)) {
@@ -61,7 +64,9 @@ export function App() {
         <FormPhoneBook handleSubmit={handleSubmit} />
           <h2>Contacts</h2>
         <Filter value={filter} onChange={onChangeFilter}/>
-        <ContactList listData={getVisibleContacts()} delContact={delContact} />
+        {isLoading
+          ? 'Loading, please wait...'
+            : < ContactList listData={getVisibleContacts()} delContact={delContact} />}
     </BoxApp>
     );
 }

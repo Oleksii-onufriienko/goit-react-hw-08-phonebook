@@ -19,7 +19,7 @@ export function ContactList({ listData, delContact }){
                 {listData.map(e => {
                 return (
                     <ListItem key={e.id}>
-                        <p>{e.name}: {e.number}</p>
+                        <p>{e.name}: {e.phone}</p>
                         <ButtonDelete type="button" onClick={()=> delContact(e.id)}>Delete</ButtonDelete>
                     </ListItem>
                 );

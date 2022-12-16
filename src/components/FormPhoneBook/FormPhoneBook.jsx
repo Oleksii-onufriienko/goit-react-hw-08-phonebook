@@ -23,7 +23,7 @@ const InputField = styled(Field)`
 export function FormPhoneBook({ handleSubmit}){
     let initialValues = {
      name: '',
-     phone: ''
+     number: ''
     }
         return (
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
@@ -36,10 +36,10 @@ export function FormPhoneBook({ handleSubmit}){
                     title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                     required
                 />
-                <InputFieldLabel htmlFor="phone">Phone</InputFieldLabel>
+                <InputFieldLabel htmlFor="number">Phone</InputFieldLabel>
                  <InputField
                     type="tel"
-                    name="phone"
+                    name="number"
                     pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                     title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                     required

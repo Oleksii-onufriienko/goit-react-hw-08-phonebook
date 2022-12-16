@@ -1,72 +1,52 @@
-import React from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import { Route, Routes } from "react-router-dom";
+import {useEffect, lazy } from "react";
+import { Layout } from './Layout/Layout';
+import { useSelector,useDispatch } from "react-redux";
 
-import { FormPhoneBook } from "./FormPhoneBook/FormPhoneBook";
-import { ContactList } from "./ContactList/ContactList";
-import { Filter } from "./Filter/Filter";
-import { setFilter } from "redux/filterSlice";
-import { fetchContacts,  addContact, deleteContact} from "services/api";
-import { useEffect } from "react";
+import { PrivateRoute } from "./PrivateRoute/PrivateRoute";
+import { RestrictedRoute } from "./RestrictedRoute/RestrictedRoute";
+import { refreshUser } from "redux/auth/authOperation";
 
-const BoxApp = styled.div`
-  padding: 20px;
-`;
+const HomePage = lazy(() => import('../Pages/HomePage'));
+const RegisterPage = lazy(() => import('../Pages/RegisterPage'));
+const LoginPage = lazy(() => import('../Pages/LoginPage'));
+const ContactsPage = lazy(() => import('../Pages/ContactsPage'));
+
 
 export function App() {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contactsData.contacts.items);
-  const filter = useSelector(state => state.filter.filter);
-  const isLoading = useSelector(state => state.contactsData.contacts.isLoading);
-  
+  const isRefreshing  = useSelector(state => state.auth.isRefreshing);
+
   useEffect(() => {
-    dispatch(fetchContacts());
-  },[dispatch]);
+    dispatch(refreshUser());
+  }, [dispatch]);
 
-  const handleSubmit = (value, {resetForm}) => {
-    const { name, phone } = value;
-    const contact = {
-        name,
-        phone,
-    };
 
-    if (isContact(name)) {
-      alert(`${name} is alredy in contact.`);
-      return;
-    }
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
 
-    dispatch(addContact(contact));
-    resetForm();
-  }
-  
-  const isContact = (name) => {
-    const normalizeName = name.toLowerCase();
-    return contacts.find(contact => contact.name.toLowerCase() === normalizeName);
-  }
-
-  const onChangeFilter = (e) => {
-    dispatch(setFilter(e.currentTarget.value));
-  }
-
-  const getVisibleContacts = () => {
-    const normalizeFilter = filter.toLowerCase();
-    return contacts.filter(contact => contact.name.toLowerCase().includes(normalizeFilter));
-  }
-
-  const delContact = (id) => { 
-    dispatch(deleteContact(id));
-    return;
-  }
-
-    return (
-    <BoxApp>
-      <h2>Phonebook</h2>
-        <FormPhoneBook handleSubmit={handleSubmit} />
-          <h2>Contacts</h2>
-        <Filter value={filter} onChange={onChangeFilter}/>
-        {isLoading
-          ? 'Loading, please wait...'
-            : < ContactList listData={getVisibleContacts()} delContact={delContact} />}
-    </BoxApp>
-    );
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute redirectTo="/contacts" component={<RegisterPage />}/>}
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
+          }
+        />
+        <Route
+          path="/contacts"
+          element={
+            <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+          }
+        />
+        </Route>
+      </Routes>
+  );
 }

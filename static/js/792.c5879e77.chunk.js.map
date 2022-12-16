@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/792.c5879e77.chunk.js","mappings":"iKAIA,UAJA,WACE,OAAO,sDACR,C","sources":["Pages/HomePage.js"],"sourcesContent":["function HomePage() {\n  return <h3>Please, login or register.</h3>;\n}\n\nexport default HomePage;\n"],"names":[],"sourceRoot":""}

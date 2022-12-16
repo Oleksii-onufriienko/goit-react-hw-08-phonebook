@@ -11,7 +11,6 @@ import {
   addContact,
   deleteContact,
 } from 'redux/contacts/contactsOperations';
-// import { fetchContacts, addContact, deleteContact } from 'services/api';
 import { useEffect } from 'react';
 
 const BoxApp = styled.div`

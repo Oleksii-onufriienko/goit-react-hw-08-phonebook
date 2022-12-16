@@ -5,16 +5,17 @@ import { logOut } from 'redux/auth/authOperation';
 import styled from 'styled-components';
 
 const Header = styled.header`
-  padding: 20px;
+  padding: 12px;
   display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
   border-radius: 3px;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
 `;
 
 const StyledNavLink = styled(NavLink)`
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 20px;
   text-decoration: none;
   color: black;
   padding: 10px;
@@ -22,6 +23,17 @@ const StyledNavLink = styled(NavLink)`
   &.active {
     color: orange;
   }
+`;
+
+const StyledButton = styled.button`
+  padding: 6px;
+  height: 100%;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+`;
+
+const StyledTitle = styled.p`
+  margin-right: 12px;
 `;
 
 export function Layout() {
@@ -40,8 +52,8 @@ export function Layout() {
       <Header>
         {isLoggedIn ? (
           <>
-            <button onClick={onLogOut}>Log Out</button>
-            <p>Вітаємо, {name}</p>
+            <StyledButton onClick={onLogOut}>Log Out</StyledButton>
+            <StyledTitle>Welcome, {name}!</StyledTitle>
           </>
         ) : (
           <>

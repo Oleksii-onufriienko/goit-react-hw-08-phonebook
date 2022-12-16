@@ -1,9 +1,5 @@
 function HomePage() {
-  return (
-    <div>
-      <h1>Please, login or register.</h1>
-    </div>
-  );
+  return <h3>Please, login or register.</h3>;
 }
 
 export default HomePage;
